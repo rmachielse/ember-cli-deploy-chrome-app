@@ -1,0 +1,17 @@
+{
+  "name": "<%= capitalizedPackageName %>",
+  "description": "<%= packageDescription %>",
+  "version": "<%= packageVersion %>",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": [
+        "background.js"
+      ]
+    }
+  },
+  "icons": {
+    "16": "<%= packageName %>-16.png",
+    "128": "<%= packageName %>-128.png"
+  }
+}
