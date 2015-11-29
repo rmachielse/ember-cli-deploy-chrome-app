@@ -55,9 +55,6 @@ module.exports = {
           .then(this._createCrxFile.bind(this, codebase !== null, distDir, crxFile))
           .then(this._createUpdateXmlFile.bind(this, codebase !== null, distDir, xmlFile))
           .then(function() {
-            this._appendGzipFilePattern();
-            this._appendManifestFilePattern();
-
             this.log('packaged chrome app succesfully', { verbose: true });
 
             return { distFiles: this.distFiles };
@@ -173,18 +170,6 @@ module.exports = {
           });
         } else {
           return Promise.resolve();
-        }
-      },
-
-      _appendGzipFilePattern: function() {
-        if (this.context.config.gzip) {
-          this.context.config.gzip.filePattern = this.context.config.gzip.filePattern.slice(0, -1) + ',crx,zip}';
-        }
-      },
-
-      _appendManifestFilePattern: function() {
-        if (this.context.config.manifest) {
-          this.context.config.manifest.filePattern = this.context.config.manifest.filePattern.slice(0, -1) + ',crx,zip}';
         }
       }
     });
