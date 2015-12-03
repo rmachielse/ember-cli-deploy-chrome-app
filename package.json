@@ -11,7 +11,8 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "homagepage": "https://github.com/rmachielse/ember-cli-deploy-chrome-app",
+  "repository": "https://github.com/rmachielse/ember-cli-deploy-chrome-app.git",
   "engines": {
     "node": ">= 0.10.0"
   },
