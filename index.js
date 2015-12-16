@@ -50,10 +50,10 @@ module.exports = {
           .then(this._loadPrivateKey.bind(this, root, keyPath))
           .then(this._createExtension.bind(this, root, inputPath, codebase))
           .then(this._loadExtension.bind(this))
-          .then(this._createZipFile.bind(this, codebase === null, distDir, zipFile))
+          .then(this._createZipFile.bind(this, typeof codebase === 'undefined', distDir, zipFile))
           .then(this._packageExtension.bind(this))
-          .then(this._createCrxFile.bind(this, codebase !== null, distDir, crxFile))
-          .then(this._createUpdateXmlFile.bind(this, codebase !== null, distDir, xmlFile))
+          .then(this._createCrxFile.bind(this, typeof codebase !== 'undefined', distDir, crxFile))
+          .then(this._createUpdateXmlFile.bind(this, typeof codebase !== 'undefined', distDir, xmlFile))
           .then(function() {
             this.log('packaged chrome app succesfully', { verbose: true });
 
@@ -153,9 +153,10 @@ module.exports = {
 
       _createUpdateXmlFile: function(create, distDir, xmlFile) {
         var _this = this;
-        var xmlBuffer = this.crx.generateUpdateXML();
 
         if (create) {
+          var xmlBuffer = this.crx.generateUpdateXML();
+
           return new Promise(function(resolve, reject) {
             fs.writeFile(path.join(distDir, xmlFile), xmlBuffer, function(err) {
               if (err) {
