@@ -9,7 +9,7 @@ This Ember CLI deploy plugin provides a way to build and deploy an Ember app as 
 Install the plugin by running:
 
 ```
-npm install ember-cli-deploy-chrome-app
+ember install ember-cli-deploy-chrome-app
 ```
 
 This will generate a `chrome` folder and a `key.pem` file in the root of your project.
