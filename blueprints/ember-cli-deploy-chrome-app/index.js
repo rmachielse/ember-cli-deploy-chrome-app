@@ -36,7 +36,7 @@ module.exports = {
   },
 
   _generateKey: function(options) {
-    var crx = path.join(__dirname, '..', '..', 'node_modules', 'crx', 'bin', 'crx.js');
+    var crx = path.join(__dirname, '..', '..', '..', 'crx', 'bin', 'crx.js');
 
     return new Promise(function(resolve, reject) {
       exec(crx + ' keygen ' + options.project.root, resolve);
