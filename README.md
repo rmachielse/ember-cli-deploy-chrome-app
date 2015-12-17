@@ -1,6 +1,7 @@
 # Ember CLI Deploy Chrome app
 [![Build Status](https://travis-ci.org/rmachielse/ember-cli-deploy-chrome-app.svg?branch=master)](https://travis-ci.org/rmachielse/ember-cli-deploy-chrome-app)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-deploy-chrome-app.svg)](http://emberobserver.com/addons/ember-cli-deploy-chrome-app)
+[![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-chrome-app.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
 
 This Ember CLI deploy plugin provides a way to build and deploy an Ember app as a Chrome app.
 
