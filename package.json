@@ -24,6 +24,7 @@
     "test": "ember try:each"
   },
   "dependencies": {
+    "chrome-webstore-upload": "^0.2.1",
     "crx": "^3.0.3",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-deploy-plugin": "^0.2.6",
