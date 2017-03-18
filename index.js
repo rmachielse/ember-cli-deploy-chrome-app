@@ -1,11 +1,13 @@
 /* jshint node: true */
 'use strict';
 
-var Promise = require('ember-cli/lib/ext/promise');
+var RSVP = require('rsvp');
 var BasePlugin = require('ember-cli-deploy-plugin');
 var ChromeExtension = require('crx');
 var path = require('path');
 var fs = require('fs.extra');
+
+var Promise = RSVP.Promise;
 
 module.exports = {
   name: 'ember-cli-deploy-chrome-app',

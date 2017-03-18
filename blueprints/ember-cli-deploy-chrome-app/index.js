@@ -1,7 +1,9 @@
-var Promise = require('ember-cli/lib/ext/promise');
+var RSVP = require('rsvp');
 var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
+
+var Promise = RSVP.Promise;
 
 module.exports = {
   normalizeEntityName: function() {},
