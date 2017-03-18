@@ -2,54 +2,6 @@
   "name": "ember-cli-deploy-chrome-app",
   "version": "0.1.4",
   "description": "The default blueprint for ember-cli addons.",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
-  "scripts": {
-    "build": "ember build",
-    "start": "ember server",
-    "test": "ember try:testall"
-  },
-  "homagepage": "https://github.com/rmachielse/ember-cli-deploy-chrome-app",
-  "repository": "https://github.com/rmachielse/ember-cli-deploy-chrome-app.git",
-  "engines": {
-    "node": ">= 6"
-  },
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "broccoli-asset-rev": "^2.4.6",
-    "ember-ajax": "^2.5.1",
-    "ember-cli": "^2.7.0",
-    "ember-cli-app-version": "^2.0.0",
-    "ember-cli-babel": "^5.1.10",
-    "ember-cli-content-security-policy": "^0.5.0",
-    "ember-cli-dependency-checker": "^1.3.0",
-    "ember-cli-deploy": "^0.6.2",
-    "ember-cli-deploy-build": "^0.1.1",
-    "ember-cli-deploy-gzip": "^0.2.3",
-    "ember-cli-deploy-manifest": "^0.1.1",
-    "ember-cli-deploy-revision-data": "^0.3.0",
-    "ember-cli-htmlbars": "^1.1.0",
-    "ember-cli-htmlbars-inline-precompile": "^0.3.5",
-    "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-jshint": "^1.0.5",
-    "ember-cli-qunit": "^3.0.0",
-    "ember-cli-release": "^0.2.8",
-    "ember-cli-sri": "^2.1.1",
-    "ember-cli-test-loader": "1.1.0",
-    "ember-cli-uglify": "^1.2.0",
-    "ember-data": "^2.7.0",
-    "ember-disable-prototype-extensions": "^1.1.0",
-    "ember-disable-proxy-controllers": "^1.0.1",
-    "ember-export-application-global": "^1.0.5",
-    "ember-load-initializers": "^0.5.1",
-    "ember-resolver": "^2.0.3",
-    "ember-suave": "^4.0.0",
-    "ember-try": "^0.2.5",
-    "loader.js": "^4.0.11"
-  },
   "keywords": [
     "ember-addon",
     "ember-cli-deploy-plugin",
@@ -58,11 +10,56 @@
     "ember",
     "ember-cli"
   ],
+  "license": "MIT",
+  "author": "",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "homagepage": "https://github.com/rmachielse/ember-cli-deploy-chrome-app",
+  "repository": "https://github.com/rmachielse/ember-cli-deploy-chrome-app.git",
+  "scripts": {
+    "build": "ember build",
+    "start": "ember server",
+    "test": "ember try:each"
+  },
   "dependencies": {
     "crx": "^3.0.3",
+    "ember-cli-babel": "^5.1.7",
     "ember-cli-deploy-plugin": "^0.2.6",
     "fs.extra": "^1.3.2",
     "rsvp": "^3.5.0"
+  },
+  "devDependencies": {
+    "broccoli-asset-rev": "^2.4.5",
+    "ember-ajax": "^2.4.1",
+    "ember-cli": "2.12.0",
+    "ember-cli-dependency-checker": "^1.3.0",
+    "ember-cli-deploy": "^1.0.0",
+    "ember-cli-deploy-build": "^0.1.1",
+    "ember-cli-deploy-gzip": "^0.2.3",
+    "ember-cli-deploy-manifest": "^0.1.1",
+    "ember-cli-deploy-revision-data": "^0.3.0",
+    "ember-cli-eslint": "^3.0.0",
+    "ember-cli-htmlbars": "^1.1.1",
+    "ember-cli-htmlbars-inline-precompile": "^0.3.6",
+    "ember-cli-inject-live-reload": "^1.4.1",
+    "ember-cli-qunit": "^3.1.0",
+    "ember-cli-release": "^0.2.9",
+    "ember-cli-shims": "^1.0.2",
+    "ember-cli-sri": "^2.1.0",
+    "ember-cli-uglify": "^1.2.0",
+    "ember-disable-prototype-extensions": "^1.1.0",
+    "ember-export-application-global": "^1.0.5",
+    "ember-load-initializers": "^0.6.0",
+    "ember-resolver": "^2.0.3",
+    "ember-source": "~2.12.0",
+    "ember-welcome-page": "^2.0.2",
+    "eslint-plugin-ember-suave": "^1.0.0",
+    "loader.js": "^4.2.3"
+  },
+  "engines": {
+    "node": ">= 4"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
