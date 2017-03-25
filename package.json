@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-deploy-chrome-app",
   "version": "0.1.5",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Build and deploy an Ember app as a Chrome app.",
   "keywords": [
     "ember-addon",
     "ember-cli-deploy-plugin",
