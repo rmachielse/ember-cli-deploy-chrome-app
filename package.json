@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-deploy-chrome-app",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Build and deploy an Ember app as a Chrome app.",
   "keywords": [
     "ember-addon",
