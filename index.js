@@ -1,48 +1,46 @@
 /* eslint-env node */
 'use strict';
 
-var RSVP = require('rsvp');
-var BasePlugin = require('ember-cli-deploy-plugin');
-var ChromeExtension = require('crx');
-var path = require('path');
-var fs = require('fs.extra');
-
-var Promise = RSVP.Promise;
+const { Promise } = require('rsvp');
+const BasePlugin = require('ember-cli-deploy-plugin');
+const ChromeExtension = require('crx');
+const path = require('path');
+const fs = require('fs.extra');
 
 module.exports = {
   name: 'ember-cli-deploy-chrome-app',
 
-  createDeployPlugin: function(options) {
-    var DeployPlugin = BasePlugin.extend({
-      name: options.name,
+  createDeployPlugin({ name }) {
+    const DeployPlugin = BasePlugin.extend({
+      name,
 
       defaultConfig: {
         inputPath: 'chrome',
         outputPath: 'chrome',
         keyPath: 'key.pem',
-        root: function(context) {
-          return context.project.root;
+        root({ project: { root } }) {
+          return root;
         },
-        name: function(context) {
-          return context.project.pkg.name;
+        name({ project: { pkg: { name } } }) {
+          return name;
         },
-        distDir: function(context) {
-          return context.distDir;
+        distDir({ distDir }) {
+          return distDir;
         }
       },
 
-      didBuild: function(context) {
-        var root = this.readConfig('root');
-        var name = this.readConfig('name');
-        var codebase = this.readConfig('codebase');
-        var distDir = this.readConfig('distDir');
-        var keyPath = this.readConfig('keyPath');
-        var inputPath = this.readConfig('inputPath');
-        var outputPath = this.readConfig('outputPath');
+      didBuild(context) {
+        let root = this.readConfig('root');
+        let name = this.readConfig('name');
+        let codebase = this.readConfig('codebase');
+        let distDir = this.readConfig('distDir');
+        let keyPath = this.readConfig('keyPath');
+        let inputPath = this.readConfig('inputPath');
+        let outputPath = this.readConfig('outputPath');
 
-        var zipFile = path.join(outputPath, name + '.zip');
-        var crxFile = path.join(outputPath, name + '.crx');
-        var xmlFile = path.join(outputPath, 'update.xml');
+        let zipFile = path.join(outputPath, `${name}.zip`);
+        let crxFile = path.join(outputPath, `${name}.crx`);
+        let xmlFile = path.join(outputPath, 'update.xml');
 
         this.log('creating chrome app...', { verbose: true });
 
@@ -56,20 +54,20 @@ module.exports = {
           .then(this._packageExtension.bind(this))
           .then(this._createCrxFile.bind(this, typeof codebase !== 'undefined', distDir, crxFile))
           .then(this._createUpdateXmlFile.bind(this, typeof codebase !== 'undefined', distDir, xmlFile))
-          .then(function() {
+          .then(() => {
             this.log('packaged chrome app succesfully', { verbose: true });
 
             return { distFiles: this.distFiles };
-          }.bind(this));
+          });
       },
 
-      _ensureOutputPath: function(distDir, outputPath) {
-        return new Promise(function(resolve, reject) {
-          fs.exists(path.join(distDir, outputPath), function(exists) {
+      _ensureOutputPath(distDir, outputPath) {
+        return new Promise((resolve, reject) => {
+          fs.exists(path.join(distDir, outputPath), (exists) => {
             if (exists) {
               resolve();
             } else {
-              fs.mkdirp(path.join(distDir, outputPath), function(err) {
+              fs.mkdirp(path.join(distDir, outputPath), (err) => {
                 if (err) {
                   reject(err);
                 } else {
@@ -81,9 +79,9 @@ module.exports = {
         });
       },
 
-      _loadPrivateKey: function(root, keyPath) {
-        return new Promise(function(resolve, reject) {
-          fs.readFile(path.join(root, keyPath), function(err, data) {
+      _loadPrivateKey(root, keyPath) {
+        return new Promise((resolve, reject) => {
+          fs.readFile(path.join(root, keyPath), (err, data) => {
             if (err) {
               reject(err);
             } else {
@@ -93,31 +91,29 @@ module.exports = {
         });
       },
 
-      _createExtension: function(root, inputPath, codebase, privateKey) {
+      _createExtension(root, inputPath, codebase, privateKey) {
         this.crx = new ChromeExtension({
           rootDirectory: path.join(root, inputPath),
-          codebase: codebase,
-          privateKey: privateKey
+          codebase,
+          privateKey
         });
 
         return this.crx.load();
       },
 
-      _loadExtension: function() {
+      _loadExtension() {
         return this.crx.loadContents();
       },
 
-      _createZipFile: function(create, distDir, zipFile, archiveBuffer) {
-        var _this = this;
-
+      _createZipFile(create, distDir, zipFile, archiveBuffer) {
         if (create) {
-          return new Promise(function(resolve, reject) {
-            fs.writeFile(path.join(distDir, zipFile), archiveBuffer, function(err) {
+          return new Promise((resolve, reject) => {
+            fs.writeFile(path.join(distDir, zipFile), archiveBuffer, (err) => {
               if (err) {
                 reject(err);
               } else {
-                _this.distFiles.push(zipFile);
-                _this.log('✔ ' + zipFile, { verbose: true });
+                this.distFiles.push(zipFile);
+                this.log(`✔ ${zipFile}`, { verbose: true });
 
                 resolve(archiveBuffer);
               }
@@ -128,21 +124,19 @@ module.exports = {
         }
       },
 
-      _packageExtension: function(archiveBuffer) {
+      _packageExtension(archiveBuffer) {
         return this.crx.pack(archiveBuffer);
       },
 
-      _createCrxFile: function(create, distDir, crxFile, crxBuffer) {
-        var _this = this;
-
+      _createCrxFile(create, distDir, crxFile, crxBuffer) {
         if (create) {
-          return new Promise(function(resolve, reject) {
-            fs.writeFile(path.join(distDir, crxFile), crxBuffer, function(err) {
+          return new Promise((resolve, reject) => {
+            fs.writeFile(path.join(distDir, crxFile), crxBuffer, (err) => {
               if (err) {
                 reject(err);
               } else {
-                _this.distFiles.push(crxFile);
-                _this.log('✔ ' + crxFile, { verbose: true });
+                this.distFiles.push(crxFile);
+                this.log(`✔ ${crxFile}`, { verbose: true });
 
                 resolve();
               }
@@ -153,19 +147,17 @@ module.exports = {
         }
       },
 
-      _createUpdateXmlFile: function(create, distDir, xmlFile) {
-        var _this = this;
-
+      _createUpdateXmlFile(create, distDir, xmlFile) {
         if (create) {
-          var xmlBuffer = this.crx.generateUpdateXML();
+          let xmlBuffer = this.crx.generateUpdateXML();
 
-          return new Promise(function(resolve, reject) {
-            fs.writeFile(path.join(distDir, xmlFile), xmlBuffer, function(err) {
+          return new Promise((resolve, reject) => {
+            fs.writeFile(path.join(distDir, xmlFile), xmlBuffer, (err) => {
               if (err) {
                 reject(err);
               } else {
-                _this.distFiles.push(xmlFile);
-                _this.log('✔ ' + xmlFile, { verbose: true });
+                this.distFiles.push(xmlFile);
+                this.log(`✔ ${xmlFile}`, { verbose: true });
 
                 resolve();
               }

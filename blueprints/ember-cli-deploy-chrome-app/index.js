@@ -1,23 +1,23 @@
-var RSVP = require('rsvp');
-var path = require('path');
-var fs = require('fs');
-var exec = require('child_process').exec;
+/* eslint-env node */
 
-var Promise = RSVP.Promise;
+const { Promise } = require('rsvp');
+const path = require('path');
+const fs = require('fs');
+const { exec } = require('child_process');
 
 module.exports = {
-  normalizeEntityName: function() {},
+  normalizeEntityName() {},
 
-  locals: function(options) {
+  locals({ project: { pkg: { name: packageName, description: packageDescription, version: packageVersion } } }) {
     return {
-      capitalizedPackageName: options.project.pkg.name.slice(0, 1).toUpperCase() + options.project.pkg.name.slice(1),
-      packageName: options.project.pkg.name,
-      packageDescription: options.project.pkg.description,
-      packageVersion: options.project.pkg.version
+      capitalizedPackageName: packageName.slice(0, 1).toUpperCase() + packageName.slice(1),
+      packageName,
+      packageDescription,
+      packageVersion
     };
   },
 
-  afterInstall: function(options) {
+  afterInstall(options) {
     return Promise.all([
       this._symlinkAssets(options),
       this._symlinkWindow(options),
@@ -25,23 +25,23 @@ module.exports = {
     ]);
   },
 
-  _symlinkAssets: function(options) {
-    return new Promise(function(resolve, reject) {
-      fs.symlink('../tmp/deploy-dist/assets', options.project.root + '/chrome/assets', 'dir', resolve);
+  _symlinkAssets({ project: { root } }) {
+    return new Promise((resolve) => {
+      fs.symlink('../tmp/deploy-dist/assets', `${root}/chrome/assets`, 'dir', resolve);
     });
   },
 
-  _symlinkWindow: function(options) {
-    return new Promise(function(resolve, reject) {
-      fs.symlink('../tmp/deploy-dist/index.html', options.project.root + '/chrome/window.html', resolve);
+  _symlinkWindow({ project: { root } }) {
+    return new Promise((resolve) => {
+      fs.symlink('../tmp/deploy-dist/index.html', `${root}/chrome/window.html`, resolve);
     });
   },
 
-  _generateKey: function(options) {
-    var crx = path.join(__dirname, '..', '..', '..', 'crx', 'bin', 'crx.js');
+  _generateKey({ project: { root } }) {
+    let crx = path.join(__dirname, '..', '..', '..', 'crx', 'bin', 'crx.js');
 
-    return new Promise(function(resolve, reject) {
-      exec(crx + ' keygen ' + options.project.root, resolve);
+    return new Promise((resolve) => {
+      exec(`${crx} keygen ${root}`, resolve);
     });
   }
 };
