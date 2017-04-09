@@ -40,6 +40,7 @@ module.exports = {
         let keyPath = this.readConfig('keyPath');
         let inputPath = this.readConfig('inputPath');
         let outputPath = this.readConfig('outputPath');
+        let updateUrl = this.readConfig('updateUrl');
 
         let manifestPath = path.join(inputPath, 'manifest.json');
         let zipFile = path.join(outputPath, `${name}.zip`);
@@ -53,8 +54,8 @@ module.exports = {
         return this._ensureOutputPath(distDir, outputPath)
           .then(this._loadPrivateKey.bind(this, root, keyPath))
           .then(this._createExtension.bind(this, root, inputPath, codebase))
-          .then(this._createSelfDistributedApp.bind(this, typeof codebase !== 'undefined', distDir, crxFile, xmlFile))
-          .then(this._createWebstoreDistributedApp.bind(this, typeof codebase === 'undefined' || typeof extensionId !== 'undefined', root, distDir, zipFile, manifestPath))
+          .then(this._createSelfDistributedApp.bind(this, typeof codebase !== 'undefined', root, distDir, crxFile, xmlFile, manifestPath, updateUrl))
+          .then(this._createWebstoreDistributedApp.bind(this, typeof extensionId !== 'undefined', distDir, zipFile))
           .then(() => {
             this.log('packaged chrome app succesfully', { verbose: true });
 
@@ -233,29 +234,32 @@ module.exports = {
         });
       },
 
-      _createSelfDistributedApp(create, distDir, crxFile, xmlFile) {
+      _createSelfDistributedApp(create, root, distDir, crxFile, xmlFile, manifestPath, updateUrl) {
         if (create) {
-          return this._loadExtension()
-            .then(this._packageExtension.bind(this))
-            .then(this._createCrxFile.bind(this, distDir, crxFile))
-            .then(this._createUpdateXmlFile.bind(this, distDir, xmlFile));
+          return this._readManifest(root, manifestPath).then((manifest) => {
+            let distributedManifest = Object.assign({}, manifest);
+
+            if (updateUrl) {
+              distributedManifest.update_url = updateUrl;
+            }
+
+            return this._writeManifest(root, manifestPath, distributedManifest)
+              .then(this._loadExtension.bind(this))
+              .then(this._packageExtension.bind(this))
+              .then(this._createCrxFile.bind(this, distDir, crxFile))
+              .then(this._createUpdateXmlFile.bind(this, distDir, xmlFile))
+              .then(this._writeManifest.bind(this, root, manifestPath, manifest));
+          });
         } else {
           return Promise.resolve();
         }
       },
 
-      _createWebstoreDistributedApp(create, root, distDir, zipFile, manifestPath) {
+      _createWebstoreDistributedApp(create, distDir, zipFile) {
         if (create) {
-          return this._readManifest(root, manifestPath).then((manifest) => {
-            let webstoreManifest = Object.assign({}, manifest);
-            delete webstoreManifest.update_url;
-
-            return this._writeManifest(root, manifestPath, webstoreManifest)
-              .then(this._loadExtension.bind(this))
-              .then(this._createZipFile.bind(this, distDir, zipFile))
-              .then(this._packageExtension.bind(this))
-              .then(this._writeManifest.bind(this, root, manifestPath, manifest));
-          });
+          return this._loadExtension()
+            .then(this._createZipFile.bind(this, distDir, zipFile))
+            .then(this._packageExtension.bind(this));
         } else {
           return Promise.resolve();
         }

@@ -68,9 +68,11 @@ module.exports = function(deployTarget) {
 ### Self-distributed apps
 
 - `codebase`
-  If you provide a codebase url, the plugin will assume that you distribute the chrome app yourself. It will generate a signed `project_name.crx` and a `update.xml` file instead of a `project_name.zip` file. The crx file will be signed with `key.pem`.
+  If you provide a codebase url, the plugin will assume that you want to create a self-distributed chrome app. It will generate a signed `project_name.crx` and a `update.xml` file. The crx file will be signed with `key.pem`.
 - `keyPath`
   The location of your key, that is used to sign the extension in case of a self-distributed app.
+- `updateUrl`
+  If you want new versions of the app to be installed automatically, you have to provide the full url to the `update.xml` file on your webserver. By default the file will be placed at `chrome/update.xml`. See [https://developer.chrome.com/extensions/autoupdate](Autoupdating) for more information.
 
 Instead of using `tmp/deploy-dist` you can also symlink to the `dist` directory, which makes it easier to use it in development. In that case you might need to change the `config/deploy.js` file to use `dist` as well:
 
@@ -91,8 +93,7 @@ module.exports = function(deployTarget) {
 ## Known limitations
 
 - Chrome apps currently seem not to be able yet to handle HTML5 pushState. Make sure `locationType` is set to `hash` in your `config/environment.js` file.
-- Depending on your configuration, you might need to disable fingerprinting. If you have symlinked `apps/chrome/window.html` to `dist/index.html`, the asset urls in `app/index.html` will be compiled like normal. However, if you have a different window.html, it will not be compiled and thus will not be able to handle fingerprinted assets. In that case you have to disable it in `ember-cli-build.js` by setting `fingerprint` to `{ enabled: false }`.
-- Due to the differences in configuration of the `manifest.json`, it is currently not possible to have your app being both self-distributed and Chrome Web Store distributed at the same time.
+- Depending on your configuration, you might need to disable fingerprinting. If you have symlinked `chrome/window.html` to `dist/index.html`, the asset urls in `app/index.html` will be compiled like normal. However, if you have a different window.html, it will not be compiled and thus will not be able to handle fingerprinted assets. In that case you have to disable it in `ember-cli-build.js` by setting `fingerprint` to `{ enabled: false }`.
 
 ## Credits
 

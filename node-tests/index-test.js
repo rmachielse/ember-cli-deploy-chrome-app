@@ -149,10 +149,12 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
       });
     });
 
-    describe('without a codebase', function() {
+    describe('with an extensionId', function() {
       beforeEach(function() {
         config = {
-          'chrome-app': {}
+          'chrome-app': {
+            extensionId: 'fakeExtensionId'
+          }
         };
 
         context = {
