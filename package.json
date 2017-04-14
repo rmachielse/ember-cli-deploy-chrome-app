@@ -33,15 +33,18 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chai-files": "^1.4.0",
     "ember-ajax": "^2.4.1",
-    "ember-cli": "2.12.0",
+    "ember-cli": "2.12.1",
     "ember-cli-blueprint-test-helpers": "^0.17.2",
     "ember-cli-dependency-checker": "^1.3.0",
     "ember-cli-deploy": "^1.0.0",
-    "ember-cli-deploy-build": "^0.1.1",
-    "ember-cli-deploy-gzip": "^0.2.3",
-    "ember-cli-deploy-manifest": "^0.1.1",
-    "ember-cli-deploy-revision-data": "^0.3.0",
+    "ember-cli-deploy-build": "^1.0.0",
+    "ember-cli-deploy-gzip": "^1.0.0",
+    "ember-cli-deploy-manifest": "^1.0.0",
+    "ember-cli-deploy-revision-data": "^1.0.0",
     "ember-cli-eslint": "^3.0.0",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-htmlbars-inline-precompile": "^0.3.6",
@@ -59,7 +62,9 @@
     "ember-welcome-page": "^2.0.2",
     "eslint-plugin-ember-suave": "^1.0.0",
     "loader.js": "^4.2.3",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "nock": "^9.0.13",
+    "rimraf": "^2.6.1"
   },
   "engines": {
     "node": ">= 4"
