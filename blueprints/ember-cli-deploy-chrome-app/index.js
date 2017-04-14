@@ -4,6 +4,7 @@ const { Promise } = require('rsvp');
 const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
+const crx = require.resolve('crx/bin/crx.js');
 
 module.exports = {
   normalizeEntityName() {},
@@ -38,8 +39,6 @@ module.exports = {
   },
 
   _generateKey({ project: { root } }) {
-    let crx = path.join(__dirname, '..', '..', '..', 'crx', 'bin', 'crx.js');
-
     return new Promise((resolve) => {
       exec(`${crx} keygen ${root}`, resolve);
     });

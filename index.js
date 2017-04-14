@@ -5,7 +5,7 @@ const { Promise } = require('rsvp');
 const BasePlugin = require('ember-cli-deploy-plugin');
 const ChromeExtension = require('crx');
 const path = require('path');
-const fs = require('fs.extra');
+const fs = require('fs-extra');
 const webStore = require('chrome-webstore-upload');
 
 module.exports = {
