@@ -4,6 +4,10 @@ node_js:
   - "6"
 
 sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
 
 cache:
   directories:
@@ -11,9 +15,8 @@ cache:
 
 before_install:
   - npm config set spin false
-
-install:
-  - npm install
+  - npm install -g npm@4
+  - npm --version
 
 script:
   - npm test
