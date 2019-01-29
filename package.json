@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "chrome-webstore-upload": "^0.2.1",
-    "crx": "^3.0.3",
+    "crx": "^3.2.1",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-deploy-plugin": "^0.2.6",
     "fs-extra": "^2.1.2",
