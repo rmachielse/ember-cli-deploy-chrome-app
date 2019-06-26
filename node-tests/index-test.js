@@ -285,8 +285,8 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
 
       describe('when the request fails', function() {
         beforeEach(function() {
-          nock('https://accounts.google.com')
-            .post('/o/oauth2/token')
+          nock('https://www.googleapis.com')
+            .post('/oauth2/v4/token')
             .reply(200, {
               access_token: 'fakeAccessToken'
             });
@@ -303,8 +303,8 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
 
       describe('when the request succeeds', function() {
         beforeEach(function() {
-          nock('https://accounts.google.com')
-            .post('/o/oauth2/token')
+          nock('https://www.googleapis.com')
+            .post('/oauth2/v4/token')
             .reply(200, {
               access_token: 'fakeAccessToken'
             });
@@ -364,8 +364,8 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
 
       describe('when the request fails', function() {
         beforeEach(function() {
-          nock('https://accounts.google.com')
-            .post('/o/oauth2/token')
+          nock('https://www.googleapis.com')
+            .post('/oauth2/v4/token')
             .reply(401);
         });
 
@@ -376,8 +376,8 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
 
       describe('when the request succeeds', function() {
         beforeEach(function() {
-          nock('https://accounts.google.com')
-            .post('/o/oauth2/token')
+          nock('https://www.googleapis.com')
+            .post('/oauth2/v4/token')
             .reply(200, {
               access_token: 'fakeAccessToken'
             });
