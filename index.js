@@ -88,6 +88,13 @@ module.exports = {
               } else {
                 this.log('uploaded to chrome web store succesfully', { verbose: true });
               }
+            })
+            .catch((error) => {
+              if (error.response) {
+                error = `uploading to chrome web store failed: ${error.response.body.error}`;
+              }
+
+              return Promise.reject(error);
             });
         } else {
           return Promise.resolve();
@@ -108,6 +115,13 @@ module.exports = {
             .then(this._publishToChromeWebStore.bind(this, publishTarget))
             .then(() => {
               this.log('published to chrome web store succesfully', { verbose: true });
+            })
+            .catch((error) => {
+              if (error.response) {
+                error = `publishing to chrome web store failed: ${error.response.body.error}`;
+              }
+
+              return Promise.reject(error);
             });
         } else {
           return Promise.resolve();

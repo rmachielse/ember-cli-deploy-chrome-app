@@ -283,7 +283,21 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
         return rimraf(distDir);
       });
 
-      describe('when the request fails', function() {
+      describe('when the oauth token request fails', function() {
+        beforeEach(function() {
+          nock('https://www.googleapis.com')
+            .post('/oauth2/v4/token')
+            .reply(400, {
+              error: 'invalid grant'
+            });
+        });
+
+        it('fails to upload the zip file to the chrome webstore', function() {
+          return expect(plugin.upload(context)).to.be.rejected;
+        });
+      });
+
+      describe('when the upload request fails', function() {
         beforeEach(function() {
           nock('https://www.googleapis.com')
             .post('/oauth2/v4/token')
@@ -301,7 +315,7 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
         });
       });
 
-      describe('when the request succeeds', function() {
+      describe('when the upload request succeeds', function() {
         beforeEach(function() {
           nock('https://www.googleapis.com')
             .post('/oauth2/v4/token')
@@ -362,11 +376,13 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
         plugin.configure(context);
       });
 
-      describe('when the request fails', function() {
+      describe('when the oauth token request fails', function() {
         beforeEach(function() {
           nock('https://www.googleapis.com')
             .post('/oauth2/v4/token')
-            .reply(401);
+            .reply(401, {
+              error: 'invalid_grant'
+            });
         });
 
         it('fails to publish to the chrome webstore', function() {
@@ -374,7 +390,7 @@ describe('ember-cli-deploy-chrome-app plugin', function() {
         });
       });
 
-      describe('when the request succeeds', function() {
+      describe('when the publish request succeeds', function() {
         beforeEach(function() {
           nock('https://www.googleapis.com')
             .post('/oauth2/v4/token')
